@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\M_Barang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UtamaController extends Controller
 {
     public function index () {
 
-        return view('utama');
+        $barang = DB::table('tbl_barang')->get();
+
+        return view('utama', ['barang'=>$barang]);
 
     }
 

@@ -13,3 +13,4 @@
 
 Route::get('/', 'UtamaController@index');
 Route::post('/pushData', 'UtamaController@store');
+Route::get('/login', 'LoginController@index');
