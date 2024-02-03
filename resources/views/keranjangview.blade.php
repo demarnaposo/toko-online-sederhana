@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Login | E-Shopper</title>
+    <title>Cart | E-Shopper</title>
     <link href="/template/css/bootstrap.min.css" rel="stylesheet">
     <link href="/template/css/font-awesome.min.css" rel="stylesheet">
     <link href="/template/css/prettyPhoto.css" rel="stylesheet">
@@ -17,7 +17,7 @@
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->
-    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="shortcut icon" href="/template/images/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/template/images/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/template/images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/template/images/ico/apple-touch-icon-72-precomposed.png">
@@ -32,16 +32,16 @@
 				<div class="row">
 					<div class="col-md-4 clearfix">
 						<div class="logo pull-left">
-							<a href="/template/index.html"><img src="/template/images/home/logo.png" alt="" /></a>
+							<a href="index.html"><img src="images/home/logo.png" alt="" /></a>
 						</div>
 
 					</div>
 					<div class="col-md-8 clearfix">
 						<div class="shop-menu clearfix pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="/template/checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-								<li><a href="/template/cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-								<li><a href="/template/login.html"><i class="fa fa-lock"></i> Login</a></li>
+								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								<li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
 							</ul>
 						</div>
 					</div>
@@ -63,9 +63,9 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="/template/index.html" class="active">Home</a></li>
-								<li><a href="/template/contact-us.html">Contact</a></li>
-								<li><a href="/template/konfirmasi.html">Confirm</a></li>
+								<li><a href="index.html" class="active">Home</a></li>
+								<li><a href="contact-us.html">Contact</a></li>
+								<li><a href="konfirmasi.html">Confirm</a></li>
 							</ul>
 						</div>
 					</div>
@@ -78,37 +78,77 @@
 			</div>
 		</div><!--/header-bottom-->
 	</header><!--/header-->
-	<section id="form"><!--form-->
+
+	<section id="cart_items">
 		<div class="container">
+			<div class="breadcrumbs">
+				<ol class="breadcrumb">
+				  <li><a href="#">Home</a></li>
+				  <li class="active">Shopping Cart</li>
+				</ol>
+			</div>
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu">
+							<td class="image">Item</td>
+							<td class="description"></td>
+							<td class="price">Price</td>
+							<td class="quantity">Quantity</td>
+							<td class="total">Total</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+                        <?php $total = 0; ?>
+                        @foreach ($keranjang as $krj)
+
+						<tr>
+                            <td class="cart_product">
+                                <a href=""><img src="/data_file/{{ $krj->gambar }}" width="50px" alt=""></a>
+							</td>
+							<td class="cart_description">
+								<h4><a href="">{{ $krj->nama_produk }}</a></h4>
+							</td>
+							<td class="cart_price">
+								<p>Rp. {{ $krj->harga }}</p>
+							</td>
+							<td class="cart_quantity">
+                                {{ $krj->jumlah }}
+							</td>
+							<td class="cart_total">
+                                <p class="cart_total_price">Rp. {{ $krj->harga * $krj->jumlah }}</p>
+							</td>
+							<td class="cart_delete">
+								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+							</td>
+						</tr>
+                        <?php $total += ($krj->jumlah * $krj->harga) ?>
+                        @endforeach
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section> <!--/#cart_items-->
+
+	<section id="do_action">
+		<div class="container">
+			<div class="heading">
+			</div>
 			<div class="row">
-				<div class="col-sm-4 col-sm-offset-1">
-					<div class="login-form"><!--login form-->
-						<h2>Login to your account</h2>
-						<form action="/masuk" method="post">
-                            <input type="email" placeholder="Email Address" name="email" />
-							<input type="password" placeholder="Password" name="password" />
-							<button type="submit" class="btn btn-default">Login</button>
-						</form>
-					</div><!--/login form-->
+				<div class="col-sm-6">
 				</div>
-				<div class="col-sm-1">
-					<h2 class="or">OR</h2>
-				</div>
-				<div class="col-sm-4">
-					<div class="signup-form"><!--sign up form-->
-						<h2>New User Signup!</h2>
-						<form action="/register" method="post">
-							<input type="text" placeholder="Name" name="nama"/>
-							<input type="email" placeholder="Email Address" name="email"/>
-							<input type="password" placeholder="Password" name="password"/>
-							<button type="submit" class="btn btn-default">Signup</button>
-						</form>
-					</div><!--/sign up form-->
+				<div class="col-sm-6">
+					<div class="total_area">
+						<ul>
+							<li>Total <span>Rp. {{ $total }}</span></li>
+						</ul>
+							<a class="btn btn-default check_out" href="/checkout">Check Out</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</section><!--/form-->
-
+	</section><!--/#do_action-->
 
 	<footer id="footer"><!--Footer-->
 
@@ -123,10 +163,11 @@
 
 	</footer><!--/Footer-->
 
+
+
     <script src="/template/js/jquery.js"></script>
-	<script src="/template/js/price-range.js"></script>
-    <script src="/template/js/jquery.scrollUp.min.js"></script>
 	<script src="/template/js/bootstrap.min.js"></script>
+	<script src="/template/js/jquery.scrollUp.min.js"></script>
     <script src="/template/js/jquery.prettyPhoto.js"></script>
     <script src="/template/js/main.js"></script>
 </body>
